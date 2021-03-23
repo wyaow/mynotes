@@ -1,0 +1,35 @@
+exec 8<>/dev/tcp/10.3.19.129/25
+
+echo -e "EHLO 10.3.19.129\r">&8
+
+echo -e "AUTH LOGIN\r">&8
+
+echo -e "dzMwMDQ2\r">&8   
+
+echo -e "V3kxNTYu\r">&8   
+
+echo -e "MAIL FROM:<weiyao9@***.com>\r">&8  
+
+echo -e "RCPT TO:<weiyao9@***.com>\r">&8 
+
+echo -e "DATA\r">&8
+
+echo -e "From:<weiyao9@***.com>">&8
+
+echo -e "To:<weiyao9@***.com>">&8
+
+echo -e "SUBJECT:this is title\n">&8
+
+echo -e "this is test">&8
+
+echo -e "\r\n.\r">&8
+
+
+
+cat<&8
+
+exec 8>&-
+
+exec 8<&-
+
+
