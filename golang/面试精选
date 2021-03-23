@@ -1,0 +1,26 @@
+16张图带你如何从0到1构建一个稳定、高性能的Redis集群？
+https://mp.weixin.qq.com/s/i2yyHyrbiFN7bCMglNYzMg
+
+
+30+张图讲解：Golang调度器GMP原理与调度全分析
+https://mp.weixin.qq.com/s/SEPP56sr16bep4C_S0TLgA
+
+超长好文：结合 Java、Go 等讲内存管理设计精要
+https://mp.weixin.qq.com/s/0Xhlxm2uZL2I7XHWf3cq1A
+
+破解50大Go语言面试题 | Gopher Daily (2021.03.20) ʕ◔ϖ◔ʔ
+https://mp.weixin.qq.com/s/WO82XDsM4QM5pVxG4uHRqA
+
+激荡60年——垃圾回收与Go的选择
+https://mp.weixin.qq.com/s?__biz=MzAxMTA4Njc0OQ==&mid=2651442959&idx=3&sn=83882fbdc628e48d054c000d499be4f4&chksm=80bb11fdb7cc98ebb3ad81cc3521cbf7775f16eda960cb30acc501d80f874dd5f0e5c895f6ac&scene=21#wechat_redirect
+
+Go垃圾回收系列之二：标记准备
+https://mp.weixin.qq.com/s/UjGmc9SkUlI48Gl3yVGlSA
+
+Golang什么时候会触发GC
+https://www.jianshu.com/p/96a52a8127d9
+
+GC相关
+https://www.bookstack.cn/read/qcrao-Go-Questions/spilt.11.GC-GC.md
+有了 GC，为什么还会发生内存泄露？
+https://www.bookstack.cn/read/qcrao-Go-Questions/spilt.7.GC-GC.md
