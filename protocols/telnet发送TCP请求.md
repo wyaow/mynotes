@@ -7,7 +7,6 @@
 
 
 
-
 1.发送单纯的HTTP1.1请求
 GET /rest/v1/healthcheck HTTP/1.1
 Host: 127.0.0.1:8080
