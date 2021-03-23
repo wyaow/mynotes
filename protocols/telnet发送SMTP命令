@@ -1,0 +1,104 @@
+# 连接邮箱服务器
+telnet smtp.***.com 25
+# telnet smtp.***.com 587
+
+# 认证
+ehlo smtp.***.com
+auth login dMDA2MDQ2
+V3kxMTYu
+
+EHLO hubspot.com
+
+
+# 编辑邮件头信息
+mail from:<weiyao9@***.com>
+rcpt to:<weiyao9@***.com>
+rcpt to:<wuchuisen@***.com>
+
+# 发送内容, end with <CRLF>.<CRLF>
+data
+From: "weiyao" <weiyao9@***.com>
+To: "Jack Zhang" <zhang@example.com>;"Jack Zhang2" <zhang@example.com>
+Subject: Test email.
+Date: Wed, 17 May 2000 19:08:29 -0400
+
+hell world. this is allen.
+.
+quit
+
+mail from:<weiyao9@***.com>
+rcpt to:<weiyao9@***.com>
+rcpt to:<wuchuisen@***.com>
+
+RCPT TO:<kate@fabrikam.com> NOTIFY=success,failure
+
+
+SMTP命令列表
+
+HELO
+
+客户端为标识自己的身份而发送的命令（通常带域名）
+
+EHLO
+
+
+
+使服务器可以表明自己支持扩展简单邮件传输协议 (ESMTP) 命令。
+
+MAIL FROM
+
+标识邮件的发件人；以 MAIL FROM: 的形式使用。
+
+RCPT TO
+
+标识邮件的收件人；以 RCPT TO: 的形式使用。
+
+TURN
+
+允许客户端和服务器交换角色，并在相反的方向发送邮件，而不必建立新的连接。
+
+ATRN
+
+ATRN (Authenticated TURN) 命令可以选择将一个或多个域作为参数。如果该会话已通过身份验证，则ATRN 命令一定会被拒绝。
+
+SIZE
+
+提供一种使 SMTP 服务器可以指出所支持的最大邮件大小的机制。兼容的服务器必须提供大小范围，以指出可以接受的最大邮件大小。客户端发送的邮件不应大于服务器所指出的这一大小。
+
+ETRN
+
+SMTP 的扩展。SMTP 服务器可以发送 ETRN 以请求另一台服务器发送它所拥有的任何电子邮件。
+
+PIPELINING
+
+提供发送命令流（而无需在每个命令之后都等待响应）的能力。
+
+CHUNKING
+
+替换 DATA 命令的 ESMTP 命令。该命令使 SMTP 主机不必持续地扫描数据的末尾，它发送带参数的 BDAT 命令，该参数包含邮件的总字节数。接收方服务器计算邮件的字节数，如果邮件大小等于 BDAT 命令发送的值时，则该服务器假定它收到了全部的邮件数据。
+
+DATA
+
+客户端发送的、用于启动邮件内容传输的命令。
+
+DSN
+
+启用传递状态通知的 ESMTP 命令。
+
+RSET
+
+使整个邮件的处理无效，并重置缓冲区。
+
+VRFY
+
+确认在邮件传递过程中可以使用邮箱；例如，vrfy ted 确认在本地服务器上驻留 Ted 的邮箱。该命令在 Exchange 实现中默认关闭。
+
+HELP
+
+返回 SMTP 服务所支持的命令列表。
+
+QUIT
+
+终止会话。
+
+SMTP命令响应码
