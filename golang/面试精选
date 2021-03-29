@@ -24,3 +24,22 @@ GC相关
 https://www.bookstack.cn/read/qcrao-Go-Questions/spilt.11.GC-GC.md
 有了 GC，为什么还会发生内存泄露？
 https://www.bookstack.cn/read/qcrao-Go-Questions/spilt.7.GC-GC.md
+
+
+图解Go select语句原理
+https://i6448038.github.io/2019/03/23/go-select-principle/
+
+快速理解Go数组和切片的内部实现原理
+https://i6448038.github.io/2018/08/11/array-and-slice-principle/
+
+图解Go的channel底层实现
+https://i6448038.github.io/2019/04/11/go-channel/
+
+为什么Go语言不允许循环引入?
+https://i6448038.github.io/
+
+图解go反射实现原理
+https://i6448038.github.io/2020/02/15/golang-reflection/
+
+Go语言interface底层实现
+https://mp.weixin.qq.com/s/re_9CmGm3xEbY7xCr5CYbQ
