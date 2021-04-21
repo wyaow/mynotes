@@ -1,4 +1,4 @@
-Rust中文学习官网
+Rust中文学习官网(书籍，课程，例子学习)
 https://www.rust-lang.org/zh-CN/learn
 
 Rust编程
