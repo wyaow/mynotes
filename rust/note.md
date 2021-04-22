@@ -20,3 +20,8 @@ https://rustcc.cn/
 
 【Rust每周一知】 Attribute 属性
 https://rustcc.cn/article?id=3d356fbf-4091-41c6-a66b-10cd72fd0e7a
+
+
+
+打印进程等待的资源
+for i in `ps -eo stat,cmd,pid | grep redis-server | grep 'D'| awk '{print $3}' ` ; do cat /proc/$i/stack ; echo $i"-------"; done
