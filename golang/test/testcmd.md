@@ -34,7 +34,10 @@ go test -c -o tt ./...
 运行测试用例
 ./tt -test.v
 ./tt -test.run TestFunc1
-./tt -run TestFunc
+./tt -test.v -test.run TestGenerateAkSk
+
+更多详细命令
+go help test
 flag provided but not defined: -run
 Usage of ./tt:
   -test.bench regexp
