@@ -35,6 +35,9 @@ go test -c -o tt ./...
 ./tt -test.v
 ./tt -test.run TestFunc1
 ./tt -test.v -test.run TestGenerateAkSk
+可以不用test.前缀
+go test -test.v -test.short -test.run TestGenerateAkSk ./...
+go test -v -short -run TestGenerateAkSk ./...
 
 更多详细命令
 go help test
