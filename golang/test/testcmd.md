@@ -1,3 +1,34 @@
+go有三种类型的函数，单元测试函数、基准测试函数和示例函数
+类型	格式	作用
+测试函数	函数名前缀为Test	测试程序的一些逻辑行为是否正确
+基准函数	函数名前缀为Benchmark	测试函数的性能
+示例函数	函数名前缀为Example	为文档提供示例文档
+go help test
+go test [-c] [-i] [build flags] [packages] [flags for test binary]
+参数解读：
+
+-c : 编译 go test 成为可执行的二进制文件，但是不运行测试。
+-i : 安装测试包依赖的 package，但是不运行测试。
+关于 build flags，调用 go help build，这些是编译运行过程中需要使用到的参数，一般设置为空
+关于 packages，调用 go help packages，这些是关于包的管理，一般设置为空
+关于 flags for test binary，调用 go help flags for test binary，这些是 go test 过程中经常使用到的参数
+
+常用示例如下：
+-test.v : 是否输出全部的单元测试用例（不管成功或者失败），默认没有加上，所以只输出失败的单元测试用例。
+-test.run pattern: 只跑哪些单元测试用例
+-test.bench patten: 只跑那些性能测试用例
+-test.benchmem : 是否在性能测试的时候输出内存情况
+-test.benchtime t : 性能测试运行的时间，默认是1s
+-test.cpuprofile cpu.out : 是否输出cpu性能分析文件
+-test.memprofile mem.out : 是否输出内存性能分析文件
+-test.blockprofile block.out : 是否输出内部goroutine阻塞的性能分析文件
+-test.memprofilerate n : 内存性能分析的时候有一个分配了多少的时候才打点记录的问题。这个参数就是设置打点的内存分配间隔，也就是 profile 中一个 sample 代表的内存大小。默认是设置为 512 * 1024 的。如果将它设置为 1，则每分配一个内存块就会在 profile 中有个打点，那么生成的 profile 的 sample 就会非常多。如果设置为0，那就是不做打点了。可以通过设置 memprofilerate=1 和 GOGC=off 来关闭内存回收，并且对每个内存块的分配进行观察。
+-test.blockprofilerate n: 基本同上，控制的是 goroutine 阻塞时候打点的纳秒数。默认不设置就相当于 -test.blockprofilerate=1，每一纳秒都打点记录一下
+-test.parallel n : 性能测试的程序并行 cpu 数，默认等于 GOMAXPROCS。
+-test.timeout t : 如果测试用例运行时间超过t，则抛出 panic
+-test.cpu 1,2,4 : 程序运行在哪些 CPU 上面，使用二进制的1所在位代表，和 nginx 的 nginx_worker_cpu_affinity 是一个道理
+-test.short : 将那些运行时间较长的测试用例运行时间缩短
+
 ### go test
 -run 执行指定函数
 -v 显示细节
@@ -115,3 +146,87 @@ func Benchmark_Add_TimerControl(b *testing.B) {
 }
 从 Benchmark() 函数开始，Timer 就开始计数。StopTimer() 可以停止这个计数过程，做一些耗时的操作，通过 StartTimer() 重新开始计时。ResetTimer() 可以重置计数器的数据。
 计数器内部不仅包含耗时数据，还包括内存分配的数据。
+
+
+#### 测试覆盖率 go test -cover
+测试覆盖率是代码被测试套件覆盖的百分比。通常使用的都是语句的覆盖率，也就是在测试中至少被运行一次的代码占总代码的比例。
+
+GO 提供内置功能来检查代码覆盖率。可以使用 go test -cover 来查看测试覆盖率。例如:5
+$ go test -cover 
+
+PASS
+coverage: 100.0% of statements
+ok      algorithm/split 0.005s
+可以看到测试用例的代码覆盖率是 100%。
+
+Go 还提供了额外的 -coverprofile 参数，用来将覆盖率相关的记录信息输出到一个文件：
+go test -cover -coverprofile=c.out
+
+PASS
+coverage: 100.0% of statements
+ok      algorithm/split 0.005s
+上面的命令会将覆盖率相关的信息输出到当前文件夹下面的 c.out 文件中，然后执行 go tool cover -html=c.out，使用 cover 工具来处理生成的记录信息，该命令会打开本地的浏览器窗口生成一个 HTML 报告:
+
+
+#### 基准测试
+go test -bench=Split
+go test -bench=Split -benchmem  获得内存分配的统计数据
+go test -bench=.
+go test -bench=Fib40 -benchtime=20s
+
+综合pprof
+go test -bench=. -benchmem -cpuprofile profile.out
+go test -bench=. -benchmem -memprofile memprofile.out -cpuprofile profile.out // 还可以同时查看内存
+
+这会在当前目录下生成 memprofile.out 和 profile.out 文件，接下来可以用输出的文件使用 pprof：
+go tool pprof profile.out 
+然后也可以用 list 命令检查函数需要的时间:
+(pprof) list Fib
+还可以通过 web 命令生成图像
+
+####Setup 与 TearDown
+测试程序有时需要在测试之前进行额外的设置（setup）或在测试之后进行拆卸（teardown）
+// 测试集的 Setup 和 Teardown
+func setupTestCase(t *testing.T) func(t *testing.T) {
+	t.Log("如有需要哦在此执行：测试之前的 setup")
+	return func(t *testing.T) {
+		t.Log("如有需要在此执行：测试之后的 teardown")
+	}
+}
+
+// 子测试的 Setup 和 Teardown
+func setupSubTest(t *testing.T) func(t *testing.T) {
+	t.Log("如有需要在此执行：子测试之前的 setup")
+	return func(t *testing.T) {
+		t.Log("如有需要在此执行：子测试之后的 teardown")
+	}
+}
+
+func TestSplit(t *testing.T) {
+	type test struct { // 定义test结构体
+		input string
+		sep   string
+		want  []string
+	}
+	tests := map[string]test{ // 测试用例使用map存储
+		"simple":      {input: "a:b:c", sep: ":", want: []string{"a", "b", "c"}},
+		"wrong sep":   {input: "a:b:c", sep: ",", want: []string{"a:b:c"}},
+		"more sep":    {input: "abcd", sep: "bc", want: []string{"a", "d"}},
+		"leading sep": {input: "枯藤老树昏鸦", sep: "老", want: []string{"", "枯藤", "树昏鸦"}},
+	}
+	teardownTestCase := setupTestCase(t) // 测试之前执行 setup 操作
+	defer teardownTestCase(t)            // 测试之后执行 teardown 操作
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) { // 使用 t.Run() 执行子测试
+			teardownSubTest := setupSubTest(t) // 子测试之前执行 setup 操作
+			defer teardownSubTest(t)           // 测试之后执行 teardown 操作
+			got := Split(tc.input, tc.sep)
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("excepted:%#v, got:%#v", tc.want, got)
+			}
+		})
+	}
+}
+
+
