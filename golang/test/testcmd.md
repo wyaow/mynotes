@@ -29,6 +29,58 @@ go test [-c] [-i] [build flags] [packages] [flags for test binary]
 -test.cpu 1,2,4 : 程序运行在哪些 CPU 上面，使用二进制的1所在位代表，和 nginx 的 nginx_worker_cpu_affinity 是一个道理
 -test.short : 将那些运行时间较长的测试用例运行时间缩短
 
+#### 编译成可执行文件之后的命令
+go test -c -o tt ./...
+./tt -run TestFunc
+flag provided but not defined: -run
+Usage of ./tt:
+  -test.bench regexp
+    	run only benchmarks matching regexp
+  -test.benchmem
+    	print memory allocations for benchmarks
+  -test.benchtime d
+    	run each benchmark for duration d (default 1s)
+  -test.blockprofile file
+    	write a goroutine blocking profile to file
+  -test.blockprofilerate rate
+    	set blocking profile rate (see runtime.SetBlockProfileRate) (default 1)
+  -test.count n
+    	run tests and benchmarks n times (default 1)
+  -test.coverprofile file
+    	write a coverage profile to file
+  -test.cpu list
+    	comma-separated list of cpu counts to run each test with
+  -test.cpuprofile file
+    	write a cpu profile to file
+  -test.failfast
+    	do not start new tests after the first test failure
+  -test.list regexp
+    	list tests, examples, and benchmarks matching regexp then exit
+  -test.memprofile file
+    	write an allocation profile to file
+  -test.memprofilerate rate
+    	set memory allocation profiling rate (see runtime.MemProfileRate)
+  -test.mutexprofile string
+    	write a mutex contention profile to the named file after execution
+  -test.mutexprofilefraction int
+    	if >= 0, calls runtime.SetMutexProfileFraction() (default 1)
+  -test.outputdir dir
+    	write profiles to dir
+  -test.parallel n
+    	run at most n tests in parallel (default 4)
+  -test.run regexp
+    	run only tests and examples matching regexp
+  -test.short
+    	run smaller test suite to save time
+  -test.testlogfile file
+    	write test action log to file (for use only by cmd/go)
+  -test.timeout d
+    	panic test binary after duration d (default 0, timeout disabled)
+  -test.trace file
+    	write an execution trace to file
+  -test.v
+    	verbose: print additional output
+
 ### go test
 -run 执行指定函数
 -v 显示细节
