@@ -39,6 +39,13 @@ go test -c -o tt ./...
 go test -test.v -test.short -test.run TestGenerateAkSk ./...
 go test -v -short -run TestGenerateAkSk ./...
 
+#### 有以下三种方式， 在测试中禁用缓存：
+执行 go test添加 --count=1 参数（推荐，效率高），以上面 例子：
+CGO_ENABLED=1 go test -v --count=1 --mod=vendor ./pkg/...
+2. Go 官方提供 clean工具，来删除对象文件和缓存文件， 不过这种方式相对麻烦：
+3. go clean -testcache // Delete all cached test results
+4. 设置 GOCACHE 环境变量。GOCACHE 指定了 go 命令执行时缓存的路径，以便之后被复用。 设置 GOCACHE=off 即可禁用缓存。
+
 更多详细命令
 go help test
 flag provided but not defined: -run
