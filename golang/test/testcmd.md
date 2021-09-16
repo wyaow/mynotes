@@ -31,6 +31,9 @@ go test [-c] [-i] [build flags] [packages] [flags for test binary]
 
 #### 编译成可执行文件之后的命令
 go test -c -o tt ./...
+运行测试用例
+./tt -test.v
+./tt -test.run TestFunc1
 ./tt -run TestFunc
 flag provided but not defined: -run
 Usage of ./tt:
